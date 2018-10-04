@@ -1,0 +1,5 @@
+before_install:
+  - gem install fpm package_cloud
+
+script:
+  - make push-deb
