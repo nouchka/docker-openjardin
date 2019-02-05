@@ -13,7 +13,6 @@ prefix = /usr/local
 .DEFAULT_GOAL := build
 
 deb:
-	mkdir -p build/
 	mkdir -p build/usr/sbin/
 	cp -Rf bin/$(DOCKER_IMAGE) build/usr/sbin/
 
@@ -27,6 +26,17 @@ build-deb: deb
 
 push-deb: build-deb
 	package_cloud push nouchka/home/ubuntu/xenial $(NAME)_*.deb
+
+build:
+	docker build -t $(DOCKER_NAMESPACE)/$(DOCKER_IMAGE) .
+
+run:
+	./bin/$(DOCKER_IMAGE)
+
+check:
+	docker run --rm -i hadolint/hadolint < Dockerfile
+
+test: build run check
 
 install:
 	install bin/$(DOCKER_IMAGE) $(prefix)/bin
