@@ -1,0 +1,4 @@
+sut:
+  build: .
+  entrypoint: openjardin
+  command: version
